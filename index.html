@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Доброе утро!</title>
+   <style>
+      body {
+         font-family: Arial, sans-serif;
+         background: linear-gradient(to right, #ff7e5f, #feb47b);
+         color: #fff;
+         text-align: center;
+         margin: 0;
+         padding: 0;
+      }
+
+      h1 {
+         font-size: 2.5em;
+         margin-top: 20px;
+      }
+
+      p {
+         font-size: 1.2em;
+         margin: 10px 0;
+      }
+
+      button {
+         background-color: #ff6347;
+         border: none;
+         color: white;
+         padding: 15px 30px;
+         text-align: center;
+         text-decoration: none;
+         display: inline-block;
+         font-size: 1em;
+         margin: 10px;
+         cursor: pointer;
+         border-radius: 5px;
+         transition: background-color 0.3s ease, transform 0.3s ease;
+      }
+
+
+
+      button:active {
+         background-color: #e53e3e;
+         transform: scale(0.95);
+      }
+
+      .none {
+         display: none;
+      }
+
+      #test-section {
+         margin: 20px auto;
+         max-width: 600px;
+         padding: 20px;
+         border: 2px solid #fff;
+         border-radius: 10px;
+         background-color: rgba(0, 0, 0, 0.6);
+      }
+
+      #question-text {
+         font-size: 1.2em;
+         margin-bottom: 20px;
+      }
+
+      #hints {
+         margin-top: 20px;
+         font-size: 1em;
+      }
+
+      #hint-text {
+         background-color: #fff;
+         color: #333;
+         padding: 10px;
+         border-radius: 5px;
+      }
+
+      a {
+         color: #fff;
+         text-decoration: underline;
+      }
+
+      @media(hover: hover) {
+         button:hover {
+            background-color: #ff4500;
+            transform: scale(1.05);
+         }
+
+         a:hover {
+            color: #ffeb3b;
+         }
+      }
+   </style>
+   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+
+   <h1>Еще раз доброе утро!</h1>
+   <p>
+      Я для тебя подготовил парочку сюрпризов.
+      Надеюсь, ты еще не встала с кровати?
+   </p>
+   <button id="btn-yes">Встала</button>
+   <button id="btn-no">Не встала</button>
+   <div class="none" id="step_2">
+      <p>
+         Отлично, тогда прошу проследовать на кухню.
+      </p>
+   </div>
+   <div class="none" id="step_3">
+      <button id="btn-thanks">Спасибо</button>
+   </div>
+   <div class="none" id="step_4">
+      <p>
+         Пожалуйста, я надеюсь, что ты рада и цветы тебе понравились. Люблю тебя!
+      </p>
+      <p>
+         Это ещё не всё. Я предлагаю тебе маленький квест. Чтобы собрать моё послание, <br>
+         Ты готова?
+      </p>
+      <button id="btn-ready">Естественно</button>
+   </div>
+   <div class="none" id="step_5">
+      <a href="https://music.yandex.by/album/14599232/track/609676" target="_blank" rel="noopener noreferrer">Включи
+         меня</a> <span>, можно погромче, если я проснусь — ничего страшного.</span>
+      <div id="test-section">
+         <p id="question-text">Тебе нужно очень внимательно обыскать то место, где мы с тобой провели первую ночь вместе
+            (в этой квартире).</p>
+         <button class="hint" id="hint-1">Подсказка 1</button>
+         <button class="hint none" id="hint-2">Подсказка 2</button>
+         <button class="hint none" id="hint-3">Подсказка 3</button>
+         <button id="btn-continue">Продолжить</button>
+         <div id="hints" class="none">
+            <p id="hint-text"></p>
+         </div>
+      </div>
+   </div>
+
+   <script>
+      $(document).ready(function () {
+         const data = [
+            {
+               question: "Тебе нужно очень внимательно обыскать то место, где мы с тобой провели первые ночи вместе (в этой квартире).",
+               clue_1: "У него смешное название",
+               clue_2: "Мы его переставили на кухню",
+               clue_3: "За подушками ищи, внимательно",
+            },
+            {
+               question: "Вторая часть находится в том месте, где мы с тобой можем увидеть наши семьи в этой квартире.",
+               clue_1: "Если смотреть из кухни",
+               clue_2: "Рядом гардероб",
+               clue_3: "Внимательно ищи под фото",
+            },
+            {
+               question: "Когда я тебя не знал, ты была для меня чем-то особенным. Когда я тебя узнал, ты стала ещё более особенной для меня. С тех пор ты для меня остаёшься такой. Когда ты поймёшь, о чём это, ты поймёшь, где искать следующую часть.",
+               clue_1: "Это слово название того что у нас есть в квартире",
+               clue_2: "На кухне",
+               clue_3: "Начинается на букву 'Mеч' заканчивается на букву 'та'",
+            },
+            {
+               question: "Это то, что ты любишь, периодически занимаешься этим, и это тебя успокаивает (мне так кажется). Ты отдала этому большую часть своей жизни. Когда последний раз ты этим занималась, ты получила результат. Когда ты поймёшь, что это, ты поймёшь, где искать следующую часть.",
+               clue_1: "У тебя есть на мой взгляд не маленький арсенал для этого занятия",
+               clue_2: "Ты этим занималась еще до знакомства со мной",
+               clue_3: "Твои результаты от этого занятия еще выставлялись в Гомеле",
+            },
+            {
+               question: "Последняя часть находится там, где мы вместе были только один раз в жизни (без меня ты была там больше одного раза)",
+               clue_1: "Без меня ты была там с семьей",
+               clue_2: "Мы там были не только вдвоем",
+               clue_3: "И настенный вариант этого ты мне подарила",
+            }
+         ];
+
+         let currentQuestionIndex = 0;
+         let hintLevel = 1;
+
+         function updateQuestion() {
+            const question = data[currentQuestionIndex];
+            $('#question-text').text(question.question);
+            $('#hint-1').removeClass('none');
+            $('#hint-2').addClass('none');
+            $('#hint-3').addClass('none');
+            $('#hints').addClass('none');
+            hintLevel = 1;
+         }
+
+         function showHint(hintNumber) {
+            const hintText = data[currentQuestionIndex][`clue_${hintNumber}`];
+            $('#hint-text').text(hintText);
+            $('#hints').removeClass('none');
+            if (hintNumber === 1) {
+               $('#hint-2').removeClass('none');
+            } else if (hintNumber === 2) {
+               $('#hint-3').removeClass('none');
+            }
+            hintLevel = hintNumber;
+         }
+
+         function continueGame() {
+            $('#hints').addClass('none');
+            currentQuestionIndex++;
+            if (currentQuestionIndex < data.length) {
+               updateQuestion();
+            } else {
+               $('#question-text').text('Молодец, ты нашла все части! Теперь нужно собрать их в одно целое. Это будет твоим подарком от меня на сегодняшнее утро. Сейчас уже давай иди буди меня! Я тебя очень люблю!');
+               $('#hint-1').hide();
+               $('#hint-2').hide();
+               $('#hint-3').hide();
+               $('#btn-continue').hide();
+            }
+         }
+
+         $('#hint-1').click(() => showHint(1));
+         $('#hint-2').click(() => showHint(2));
+         $('#hint-3').click(() => showHint(3));
+         $('#btn-continue').click(continueGame);
+
+         // Обработчики для новых кнопок
+         $('#btn-yes').click(() => {
+            alert("Тогда ложись и давай представим, что ты не встала :)");
+         });
+
+         $('#btn-no').click(() => {
+            $('#step_2').show();
+            setTimeout(() => {
+               $('#step_3').show();
+            }, 1000);
+         });
+
+         $('#btn-thanks').click(() => {
+            $('#step_4').show();
+         });
+
+         $('#btn-ready').click(() => {
+            $('#step_5').show();
+         });
+
+         // Инициализация
+         updateQuestion();
+      });
+   </script>
+
+</body>
+
+</html>
